@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
-
+//file outdated
 interface ImageUploadProps {
   onChange: (base64: string) => void;
   label: string;
