@@ -9,6 +9,7 @@ const useLike = ({ postId, userId }: { postId: string; userId?: string }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedPost, mutate: mutateFetchedPost } = usePost(postId);
   const { mutate: mutateFetchedPosts } = usePosts(userId);
+  const { mutate: mutateFetchedPostsUser } = usePosts(currentUser?.id);
 
   const isAlreadyLiked = useMemo(() => {
     const list = fetchedPost?.likedIds || [];
@@ -24,11 +25,12 @@ const useLike = ({ postId, userId }: { postId: string; userId?: string }) => {
       }
 
       mutateFetchedPost();
+      mutateFetchedPostsUser();
       mutateFetchedPosts();
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Something went wrong");
     }
-  }, [postId, isAlreadyLiked, mutateFetchedPost, mutateFetchedPosts]);
+  }, [postId, isAlreadyLiked, mutateFetchedPost, mutateFetchedPosts, mutateFetchedPostsUser]);
 
   return {
     isAlreadyLiked,
