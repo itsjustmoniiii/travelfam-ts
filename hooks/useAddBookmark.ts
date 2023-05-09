@@ -16,6 +16,7 @@ const useAddBookmark = ({
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedPost, mutate: mutateFetchedPost } = usePost(postId);
   const { mutate: mutateFetchedPosts } = usePosts(userId);
+ const { mutate: mutateFetchedUserPosts } = usePosts(currentUser?.id);
   const { mutate: mutateFetchedBookmarks } = useBookmarks(currentUser?.id);
 
   const isAlreadyBookmarked = useMemo(() => {
@@ -33,6 +34,7 @@ const useAddBookmark = ({
 
       mutateFetchedPost();
       mutateFetchedPosts();
+      mutateFetchedUserPosts();
       mutateFetchedBookmarks();
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Something went wrong");
@@ -42,6 +44,7 @@ const useAddBookmark = ({
     isAlreadyBookmarked,
     mutateFetchedPost,
     mutateFetchedPosts,
+    mutateFetchedUserPosts,
     mutateFetchedBookmarks,
   ]);
 
